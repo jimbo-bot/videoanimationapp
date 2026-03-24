@@ -1,63 +1,50 @@
-name: Build APK
+name: Fast Build APK
 
 on:
   push:
     branches:
       - main
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout code
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Setup Java 17
-      - name: Setup Java
+      - name: Setup Java (lighter)
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      # Setup Node.js 18
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
-      # Cache node_modules for faster builds
-      - name: Cache node modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      # Install Cordova globally
       - name: Install Cordova
         run: npm install -g cordova
 
-      # Install project dependencies
-      - name: Install Dependencies
-        run: npm install || true
+      # ⚡ Skip unnecessary installs
+      - name: Install deps
+        run: npm install --omit=dev || true
 
-      # Add Android platform (ignore if already exists)
-      - name: Add Android Platform
-        run: cordova platform add android || true
+      # 🧼 Clean build
+      - name: Clean platform
+        run: rm -rf platforms/android || true
 
-      # Build the APK
-      - name: Build APK
-        run: cordova build android
+      - name: Add Android
+        run: cordova platform add android
 
-      # Upload the generated APK
+      # ⚡ Faster debug build
+      - name: Build APK (fast)
+        run: cordova build android --debug --no-telemetry
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: vid-animeApp
+          name: Fast-APK
           path: platforms/android/app/build/outputs/apk/debug/app-debug.apk
+          
