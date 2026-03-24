@@ -1,0 +1,39 @@
+‎<?xml version='1.0' encoding='utf-8'?>
+‎<widget id="com.salims.vidanime" version="1.0.0"
+‎    xmlns="http://www.w3.org/ns/widgets"
+‎    xmlns:cdv="http://cordova.apache.org/ns/1.0">
+‎
+‎    <!-- App Name -->
+‎    <name>vid-animeApp</name>
+‎
+‎    <!-- Description -->
+‎    <description>
+‎        Video to animation app container
+‎    </description>
+‎
+‎    <!-- Author -->
+‎    <author email="financeserviceskenya@gmail.com" href="https://financeserviceskenya@gmail.com">
+‎        Salim Jimbo
+‎    </author>
+‎
+‎    <!-- Start page -->
+‎    <content src="index.html" />
+‎
+‎    <!-- Allow all navigation (safe for now) -->
+‎    <access origin="*" />
+‎
+‎    <!-- Android Settings -->
+‎    <platform name="android">
+‎        
+‎        <!-- App Icon -->
+‎        <icon src="res/icon.png" />
+‎
+‎        <!-- Optional: Fullscreen -->
+‎        <preference name="Fullscreen" value="true" />
+‎
+‎        <!-- Optional: Hide status bar -->
+‎        <preference name="StatusBarOverlaysWebView" value="false" />
+‎
+‎    </platform>
+‎
+‎</widget>
